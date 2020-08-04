@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+
+typedef struct
+{
+    string name;
+    int vote;
+}
+candidate;
+
+
+int main(int argc, string argv[])
+{
+    //read how many candidates
+    int number_candidate = argc-1;
+    candidate candidate_count[number_candidate];
+
+    for(int i = 2; i<=argc; i++)
+    {
+        candidate_count[i-2].name = argv[i-1];
+        candidate_count[i-2].vote = 0;
+        printf("%s\n", candidate_count[i-2].name);
+    }
+    
+    //read the rank of voters
+    int number_voter = get_int("Number of voters:  ");
+    
+    string preference[number_voter][3];
+    
+    for(int i = 0; i < number_voter; i++)
+    {
+        preference[i][0] = get_string("Rank 1: ");
+        preference[i][1] = get_string("Rank 2: ");
+        preference[i][2] = get_string("Rank 3: ");
+        printf("\n");
+        
+        //printf("%s %s %s\n", preference[i+1][0], preference[i+1][1], preference[i+1][2]);
+    }
+    
+    //choose the winner
+    int middle_num_voter;
+    
+    if(number_voter%2 == 0)
+    {
+        middle_num_voter = number_voter/2;
+    }
+    else
+    {
+        middle_num_voter = number_voter/2 + 1;
+    }
+    //printf("%i\n", middle_num_voter);
+    
+    for(int i = 0; i < number_voter; i++)
+    {
+        for(int j = 2; j <= argc; j++)
+        {
+            if(strcmp((candidate_count[j-2].name) , (preference[i][0])) == 0)
+            {
+                candidate_count[j-2].vote += 1;
+            }
+        }
+    }
+    printf("%s %i\n%s %i\n%s %i\n", candidate_count[0].name, candidate_count[0].vote, candidate_count[1].name, candidate_count[1].vote, candidate_count[2].name, candidate_count[2].vote);
+    
+    while(true)
+    {
+    
+    for(int k = 0; k < 2; k++)
+    {
+    
+    string min_candidate_name = candidate_count[0].name;
+    
+    for(int i = 2; i <= argc; i++)
+    {
+        if(candidate_count[i-2].vote >= middle_num_voter)
+        {
+            printf("winner is: %s\n", candidate_count[i-2].name);
+            return 0;
+        }
+        else if(i < argc)
+        {
+            if(candidate_count[i-1].vote < candidate_count[i-2].vote)
+            {
+                min_candidate_name = candidate_count[i-1].name;
+            }
+        }
+        
+    }
+    
+    for(int i = 0; i < number_voter; i++)
+    {
+        if(strcmp((preference[i][k]), min_candidate_name) == 0)
+        {
+            for(int j = 2; j <= argc; j++)
+            {
+                if(strcmp((candidate_count[j-2].name) , (preference[i][k+1])) == 0)
+                {
+                    candidate_count[j-2].vote += 1;
+                }
+            }
+        }
+    }
+    printf("%s %i\n%s %i\n%s %i\n", candidate_count[0].name, candidate_count[0].vote, candidate_count[1].name, candidate_count[1].vote, candidate_count[2].name, candidate_count[2].vote);
+    
+    }
+    }
+    
+    
+}

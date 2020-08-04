@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <cs50.h>
+#include <string.h>
+#define MAX 9
+
+typedef struct
+{
+    int winner_vote;
+    int loser_vote;
+    string winner_name;
+    string loser_name;
+}
+pair;
+
+int preference[9][9];
+bool looked[9][9];
+
+string candidate[9];
+pair pairs[(9*8)/(1*2)];
+
+int candidate_count;
+int pair_count;
+
+int main (int argc, string argv[])
+{
+    candidate_count = argc - 1;
+    //read cadidate from argv[]
+    for(int i = 0; i < candidate_count; i++)
+    {
+        candidate[i] = argv[i+1];
+    }
+
+    int voter_number = get_int("Number of voters: ");
+
+}
+
+bool vote (int rank, string name, int ranks[])
+{
+    for(int i = 0; i < candidate_count; i++)
+    {
+        if(strcmp(candidate[i], name) == 0)
+        {
+            ranks[rank] = i; //i is candidate[i]
+            reture true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+void record_preference(int ranks[])
+{
+    for(int i = 0; i < candidate_count; i++)
+    {
+        for(int j = i + 1; j < candidate_count; j++)
+        {
+            preference[rank[i]][rank[j]] += 1;
+        }
+    }
+    return;
+}
+
+void add_pairs(void)
+{
+    pair_count = -1;
+
+    for(int i = 0; i < candidate_count; i++)
+    {
+        for(int j = i - 1; j >= 0; j--)
+        {
+            if(preference[i][j] > perference[j][i])
+            {
+                pair[pair_count+=1].winner_vote = preference[i][j];
+                pair[pair_count+=1].winner_name = candidate[i];
+
+                pair[pair_count+=1].loser_vote = preference[j][i];
+                pair[pair_count+=1].loser_name = candidate[j];
+
+            }
+            else
+            {
+                pair[pair_count+=1].winner_vote = preference[j][i];
+                pair[pair_count+=1].winner_name = candidate[j];
+
+                pair[pair_count+=1].loser_vote = preference[i][j];
+                pair[pair_count+=1].loser_name = candidate[i];
+            }
+        }
+    }
+    return;
+}
+
+void sort_pairs(void)
+{
+    int
+}
